@@ -3,7 +3,7 @@
 #
 
 # Fügen Sie der ausführbaren Datei dieses Projekts eine Quelle hinzu.
-add_executable (test "main.cpp" )
+add_executable (test "main.cpp"  "libs/random.h" "game.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET test PROPERTY CXX_STANDARD 20)
