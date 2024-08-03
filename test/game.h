@@ -60,8 +60,14 @@ bool check_enemy(Enemy enemy)
 
 int game_loop(Enemy enemy)
 {
+	static long long counter = 0;
 	char in;
 	std::cin >> in;
+	if(counter > 0)
+	{
+		print_g_data(game);
+	}
+
 	if (in == 'w')
 	{
 		if (check_enemy(enemy) == false)
