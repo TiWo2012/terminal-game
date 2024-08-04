@@ -7,7 +7,7 @@ int main()
 {
 	auto enem1 = Enemy{ .x = 2, .y = 3 };
 
-	game_loop(enem1);
+	game_loop({enem1, });
 
 	return 0; 
 } 

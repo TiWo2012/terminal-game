@@ -1,4 +1,5 @@
 #pragma once
+#include <initializer_list>
 
 struct Enemy {
 	short x, y;
@@ -24,6 +25,15 @@ void print_g_data(game_data game)
 void print_p_data(game_data game)
 {
 	std::cout << "goal x = " << game.goal_x << "\ngoal y = " << game.goal_y << "\nplayer x = " << game.player.x << "\nplayer y = " << game.player.y;
+}
+
+void print_e_data(std::initializer_list<Enemy> enemys)
+{
+	for (auto enemy : enemys)
+	{
+		static int counter = 0;
+		std::cout << "x, y from number " << counter << " are x: " << enemy.x << "and the y is: " << enemy.y;
+	}
 }
 
 bool check_won(game_data game)
@@ -58,68 +68,87 @@ bool check_enemy(Enemy enemy)
 	}
 }
 
-int game_loop(Enemy enemy)
+int game_loop(std::initializer_list<Enemy> enemys)
 {
 	static long long counter = 0;
 	char in;
 	std::cin >> in;
-	if(counter > 0)
+	if (counter <  1 )
 	{
 		print_g_data(game);
 	}
 
+	counter++;
+
 	if (in == 'w')
 	{
-		if (check_enemy(enemy) == false)
+		for (auto enemy : enemys)
 		{
-			if (check_won(game) == false)
+			if (check_enemy(enemy) == false)
 			{
-				game.player.x += 1;
-				print_p_data(game);
-				game_loop(enemy);
+				if (check_won(game) == false)
+				{
+					game.player.x += 1;
+					print_p_data(game);
+					print_e_data(enemys);
+					game_loop(enemys);
+				}
 			}
 		}
 	}
 	else if (in == 's')
 	{
-		if (check_enemy(enemy) == false)
+		for (auto enemy : enemys)
 		{
-			if (check_won(game) == false)
+			if (check_enemy(enemy) == false)
 			{
-				game.player.x -= 1;
-				print_p_data(game);
-				game_loop(enemy);
+				if (check_won(game) == false)
+				{
+					game.player.x += 1;
+					print_p_data(game);
+					print_e_data(enemys);
+					game_loop(enemys);
+				}
 			}
 		}
 	}
 	else if (in == 'a')
 	{
-		if (check_enemy(enemy) == false)
+		for (auto enemy : enemys)
 		{
-			if (check_won(game) == false)
+			if (check_enemy(enemy) == false)
 			{
-				game.player.x -= 1;
-				print_p_data(game);
-				game_loop(enemy);
+				if (check_won(game) == false)
+				{
+					game.player.x += 1;
+					print_p_data(game);
+					print_e_data(enemys);
+					game_loop(enemys);
+				}
 			}
 		}
 	}
 	else if (in == 'd')
 	{
-		if (check_enemy(enemy) == false)
+		for (auto enemy : enemys)
 		{
-			if (check_won(game) == false)
+			if (check_enemy(enemy) == false)
 			{
-				game.player.x += 1;
-				print_p_data(game);
-				game_loop(enemy);
+				if (check_won(game) == false)
+				{
+					game.player.x += 1;
+					print_p_data(game);
+					print_e_data(enemys);
+					game_loop(enemys);
+				}
 			}
 		}
 	}
 	else if (in == 'p')
 	{
 		print_g_data(game);
-		game_loop(enemy);
+		print_e_data(enemys);
+		game_loop(enemys);
 	}
 	else if (in == 'x')
 	{
@@ -129,6 +158,7 @@ int game_loop(Enemy enemy)
 	else
 	{
 		std::cerr << "unrecognized move \n";
-		game_loop(enemy);
+		print_e_data(enemys);
+		game_loop(enemys);
 	}
 }
